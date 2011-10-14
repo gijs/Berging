@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>HNO</title>
+        <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/underscore.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/json2.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/jspdf.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/jsonselect.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/backbone.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script type="text/template" id="algemene_gegevens">
+            <div class="">
+                <fieldset id="algemene_gegevens" class="">
+                    <legend>Algemene Gegevens</legend>
+                    <label for="contactpersoon_waterschap">Contactpersoon waterschap</label><input type="text" name="contactpersoon_waterschap" value="" id="contactpersoon_waterschap">
+                    <label for="contactpersoon_initiatiefnemer">Contactpersoon initiatiefnemer</label><input type="text" name="contactpersoon_initiatiefnemer" value="" id="contactpersoon_initiatiefnemer">
+                    <label for="naam_project">Naam project</label><input type="text" name="naam_project" value="" id="naam_project">
+                    <label for="datum">Datum</label><input type="text" name="datum" value="" id="datum">
+                    <label for="algemene_opmerkingen">Algemene opmerkingen (in rapport)</label>
+                    <textarea name="algemene_opmerkingen" id="algemene_opmerkingen" rows="8" cols="40"></textarea>
+                    <label for="interne_opmerkingen">Interne opmerkingen (niet in rapport)</label>
+                    <textarea name="interne_opmerkingen" rows="8" cols="40"></textarea>
+                </fieldset>
+            </div>    
+        </script>
+    </head>
+    
+    <body>
+        <div id="app"></div>
+    </body>
+</html>

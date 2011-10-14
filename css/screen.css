@@ -1,0 +1,95 @@
+/* CSS Document */
+/***********************************************
+* Forms With Style - ? Design Melt Down (www.designmeltdown.com)
+* This notice MUST stay intact for legal use
+* Visit Design Melt Down at http://www.designmeltdown.com/ 
+***********************************************/
+body{
+	background-color:#ecefcb;
+}
+
+form fieldset{
+	background-color:#e9f9ac;
+	
+	border-width:2px 2px 2px 10px;
+	border-style:solid;
+	border-color:#cee574;
+	
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+		
+	margin:20px 0px 20px 20px;
+	width:350px;
+	position:relative;
+	display:block;
+	padding: 0px 10px 10px 10px;
+}
+
+form fieldset legend{	
+	background-color:#ecefcb;
+	
+	border-width:1px 1px 1px 10px;
+	border-color:#ff9900;
+	border-style:solid;
+	
+	color:#5c71a2;
+	font-weight:bold;
+	text-transform:uppercase;
+	font-size:90%;
+	text-align:center;
+		
+	width:186px;
+	padding:3px 5px;
+	margin:0px 0px 10px -40px;
+	position:relative;
+	top: -14px;
+	
+}
+	 
+form fieldset legend img{
+	padding:0px 5px 0px 5px;	
+}
+
+label{
+	color:#5c71a2;
+	font-size:90%;
+	font-weight:bold;
+	
+	display:block;
+	float:left;
+	width:100px;
+	text-align:right;
+	margin:4px 5px 0px 0px;
+}
+
+input{
+	background-color:#e9f9ac;
+	
+	width:200px;
+	margin:2px 0px 0px 0px;
+	
+	border-width: 0px 0px 1px 0px;
+	border-style: solid solid dotted solid;
+	border-color:#809431;
+	
+	color:#5c71a2;
+	font-family:"Courier New", Courier, mono;
+	
+	padding:1px 2px;
+}
+
+.button{
+	background-color:#e9f9ac;
+	background-image:none;
+	
+	border-width:1px;
+	border-style:solid;
+	border-color:#809431;
+	
+	font-weight:bold;
+	font-family:Arial, Helvetica, sans-serif;
+	
+	width:380px;
+	padding:2px;
+	margin:0px 0px 0px 20px
+}
