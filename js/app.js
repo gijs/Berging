@@ -1,13 +1,13 @@
 (function() {
-  var AfvoerModel, AppView, DELTAMAX_167, a, afvoertabel, app;
-  var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  var AfvoerModel, AppView, DELTAMAX_167, afvoertabel;
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
     for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
     function ctor() { this.constructor = child; }
     ctor.prototype = parent.prototype;
     child.prototype = new ctor;
     child.__super__ = parent.prototype;
     return child;
-  }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  };
   DELTAMAX_167 = 4.1;
   afvoertabel = {
     afvoercoefficient: [0.3, 0.5, 0.8, 1.2, 1.5, 1.8, 2.3, 3, 4, 5],
@@ -24,11 +24,19 @@
   AppView = (function() {
     __extends(AppView, Backbone.View);
     function AppView() {
+      this.render = __bind(this.render, this);
+      this.initialize = __bind(this.initialize, this);
       AppView.__super__.constructor.apply(this, arguments);
     }
+    AppView.prototype.el = $("#app");
+    AppView.prototype.tpl = _.template($('#algemene_gegevens').html.toString());
+    AppView.prototype.initialize = function() {
+      console.log("AppView()");
+      return this.render();
+    };
     AppView.prototype.render = function() {
-      $("#app").html(this.template($("#algemene_gegevens")));
-      return this;
+      console.log("render()");
+      return $('#app').html($('#algemene_gegevens').html());
     };
     return AppView;
   })();
@@ -125,11 +133,7 @@
     };
     return AfvoerModel;
   }).call(this);
-  a = new AfvoerModel;
-  a.set({
-    'talud': -3
+  $(document).ready(function() {
+    return window.app = new AppView;
   });
-  a.save;
-  console.log(a.get('talud'));
-  app = new AppView();
 }).call(this);

@@ -10,13 +10,21 @@ afvoertabel =
     berging_uur_2: [4.2, 4.1, 4.0, 3.9, 3.8, 3.7, 3.5, 3.3, 3.1, 2.9]
     extra_berging_uur_2: [1.8, 1.7, 1.6, 1.5, 1.4, 1.4, 1.4, 1.2, 1.2, 1.1]
     tijd_uur_2: [0.333, 0.333, 0.333, 0.333, 0.333, 0.333, 0.2083, 0.2083, 0.1667, 0.125]
-    
 
 
 class AppView extends Backbone.View
-    render: ->
-        $("#app").html @template($("#algemene_gegevens"))
-        this
+    el: $("#app")
+    tpl: _.template $('#algemene_gegevens').html.toString()
+
+    initialize: =>
+        console.log "AppView()"
+        @render()
+    render: =>
+        console.log "render()"
+        $('#app').html($('#algemene_gegevens').html())
+        # this.el.html($('#algemene_gegevens').html())
+
+
 
 class AfvoerModel extends Backbone.Model
     defaults: ->
@@ -33,7 +41,7 @@ class AfvoerModel extends Backbone.Model
         afvoercoef_t100: 0
         lengte: 0
         talud: 1
-        
+
     initialize: ->
         console.log "Initializing AfvoerModel"
 
@@ -49,8 +57,8 @@ class AfvoerModel extends Backbone.Model
         extra_berging_t100 = @extra_berging_t100_per_m2 * (@nieuw_verhard_oppervlak - @bestaand_verhard_oppervlak)
         extra_berging_t100_1 = @extra_berging_t100_per_m2_1 * (@nieuw_verhard_oppervlak - @bestaand_verhard_oppervlak)
         extra_berging_t100_2 = @extra_berging_t100_per_m2_2 * (@nieuw_verhard_oppervlak - @bestaand_verhard_oppervlak)
-        
-        
+
+
         if (@toekomstig_maaiveld_niveau - @ghg - @hoogte) < 1
             oppervlakte_kratten = -2 * @infiltratiesnelheid2 * @time * @hoogte + 
                 4 * @infiltratiesnelheid22 * @time2 * @hoogte2 + 
@@ -87,19 +95,19 @@ class AfvoerModel extends Backbone.Model
                 4 * @hoogte * @delta_max_2 * @porosity / 100 + 4 * @infiltratiesnelheid2 * 
                 @time_2 * @delta_max_2 * 0.5 / 
                 2 * @hoogte * @porosity / 100 + 2 * @infiltratiesnelheid2 * @time_22
-        
-        
+
+
         breedte = @delta_max / @hoogte + @infiltratiesnelheid2 * @time * @lengte + @talud * @hoogte
         breedte_1 = @delta_max_1 / @hoogte + @infiltratiesnelheid2 * @time_1 * @lengte + @talud * @hoogte
         breedte_2 = @delta_max_2 / @hoogte + @infiltratiesnelheid2 * @time_2 * @lengte + @talud * @hoogte
-        
+
         breedte_max = Math.max(breedte, breedte_1, breedte_2)
-        
+
         if (breedte_max - 2 * @talud * @hoogte) < 0
             talud_nieuw = ((@breedte_max - @talud * @hoogte) / (@hoogte)) - 0.05
             hoogte_nieuw = ((@breedte_max - @talud * @hoogte) / (@talud)) - 0.05
             @lengte_nieuw = (((@breedte_max - (@talud * @hoogte)) / (@talud * @hoogte)) * @lengte) - 0.05
-        
+
 
     validate = (attrs) =>
         console.log "Validating"
@@ -114,19 +122,18 @@ class AfvoerModel extends Backbone.Model
         if infiltratiesnelheid1 > 2
             @infiltratiesnelheid2 = infiltratiesnelheid1
 
-
-
     toggle: ->
         this.save done:!@get 'done'
-        
+
     get_max_hoogte: =>
         max_hoogte = @toekomstig_maaiveld_niveau - @ghg - 0.5
         max_hoogte
-        
-        
-a = new AfvoerModel
-a.set 'talud': -3
-a.save
-console.log a.get 'talud'
 
-app = new AppView()
+
+$(document).ready ->
+    # a = new AfvoerModel
+    # a.set 'talud': -3
+    # a.save
+    # console.log a.get 'talud'
+    window.app = new AppView
+
