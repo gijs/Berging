@@ -24,26 +24,48 @@
   AppView = (function() {
     __extends(AppView, Backbone.View);
     function AppView() {
-      this.showPopup = __bind(this.showPopup, this);
-      this.render = __bind(this.render, this);
+      this.done = __bind(this.done, this);
+      this.activeInput = __bind(this.activeInput, this);
+      this.showStep3 = __bind(this.showStep3, this);
+      this.showStep2 = __bind(this.showStep2, this);
+      this.showStep1 = __bind(this.showStep1, this);
       this.initialize = __bind(this.initialize, this);
       AppView.__super__.constructor.apply(this, arguments);
     }
     AppView.prototype.events = {
-      'click #popup_button': 'showPopup'
+      'click #step1_button': 'showStep2',
+      'click #step2_button': 'showStep3',
+      'click #done_button': 'done',
+      'blur input[type=text]': 'done'
     };
     AppView.prototype.initialize = function() {
       console.log("AppView.initialize()");
-      return this.render();
+      return this.showStep1();
     };
-    AppView.prototype.render = function() {
+    AppView.prototype.showStep1 = function() {
       var template;
-      console.log("AppView.render()");
+      console.log("AppView.showStep1()");
       template = _.template($("#algemene_gegevens").html(), {});
       return this.el.html(template);
     };
-    AppView.prototype.showPopup = function() {
-      return console.log("AppView.showPopup()");
+    AppView.prototype.showStep2 = function() {
+      var template;
+      console.log("AppView.showStep2()");
+      template = _.template($("#stap2_kenmerken").html(), {});
+      return this.el.html(template);
+    };
+    AppView.prototype.showStep3 = function() {
+      var template;
+      console.log("AppView.showStep3()");
+      template = _.template($("#stap3_systeemeisen").html(), {});
+      return this.el.html(template);
+    };
+    AppView.prototype.activeInput = function() {
+      return console.log;
+    };
+    AppView.prototype.done = function(e) {
+      console.log(e);
+      return console.log("Done!");
     };
     return AppView;
   })();

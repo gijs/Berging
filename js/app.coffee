@@ -14,16 +14,30 @@ afvoertabel =
 
 class AppView extends Backbone.View
     events:
-        'click #popup_button': 'showPopup'
+        'click #step1_button': 'showStep2'
+        'click #step2_button': 'showStep3'
+        'click #done_button': 'done'
+        'blur input[type=text]': 'done'
     initialize: =>
         console.log "AppView.initialize()"
-        @render()
-    render: =>
-        console.log "AppView.render()"
+        @showStep1()
+    showStep1: =>
+        console.log "AppView.showStep1()"
         template = _.template $("#algemene_gegevens").html(), {}
         @el.html template
-    showPopup: =>
-        console.log "AppView.showPopup()"
+    showStep2: =>
+        console.log "AppView.showStep2()"
+        template = _.template $("#stap2_kenmerken").html(), {}
+        @el.html template
+    showStep3: =>
+        console.log "AppView.showStep3()"
+        template = _.template $("#stap3_systeemeisen").html(), {}
+        @el.html template
+    activeInput: =>
+        console.log
+    done: (e) =>
+        console.log e
+        console.log "Done!"
 
 
 class AfvoerModel extends Backbone.Model
