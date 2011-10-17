@@ -24,19 +24,26 @@
   AppView = (function() {
     __extends(AppView, Backbone.View);
     function AppView() {
+      this.showPopup = __bind(this.showPopup, this);
       this.render = __bind(this.render, this);
       this.initialize = __bind(this.initialize, this);
       AppView.__super__.constructor.apply(this, arguments);
     }
-    AppView.prototype.el = $("#app");
-    AppView.prototype.tpl = _.template($('#algemene_gegevens').html.toString());
+    AppView.prototype.events = {
+      'click #popup_button': 'showPopup'
+    };
     AppView.prototype.initialize = function() {
-      console.log("AppView()");
+      console.log("AppView.initialize()");
       return this.render();
     };
     AppView.prototype.render = function() {
-      console.log("render()");
-      return $('#app').html($('#algemene_gegevens').html());
+      var template;
+      console.log("AppView.render()");
+      template = _.template($("#algemene_gegevens").html(), {});
+      return this.el.html(template);
+    };
+    AppView.prototype.showPopup = function() {
+      return console.log("AppView.showPopup()");
     };
     return AppView;
   })();
@@ -134,6 +141,8 @@
     return AfvoerModel;
   }).call(this);
   $(document).ready(function() {
-    return window.app = new AppView;
+    return window.app = new AppView({
+      el: $("#app")
+    });
   });
 }).call(this);

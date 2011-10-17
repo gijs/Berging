@@ -13,17 +13,17 @@ afvoertabel =
 
 
 class AppView extends Backbone.View
-    el: $("#app")
-    tpl: _.template $('#algemene_gegevens').html.toString()
-
+    events:
+        'click #popup_button': 'showPopup'
     initialize: =>
-        console.log "AppView()"
+        console.log "AppView.initialize()"
         @render()
     render: =>
-        console.log "render()"
-        $('#app').html($('#algemene_gegevens').html())
-        # this.el.html($('#algemene_gegevens').html())
-
+        console.log "AppView.render()"
+        template = _.template $("#algemene_gegevens").html(), {}
+        @el.html template
+    showPopup: =>
+        console.log "AppView.showPopup()"
 
 
 class AfvoerModel extends Backbone.Model
@@ -135,5 +135,4 @@ $(document).ready ->
     # a.set 'talud': -3
     # a.save
     # console.log a.get 'talud'
-    window.app = new AppView
-
+    window.app = new AppView {el: $("#app")}

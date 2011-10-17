@@ -1,95 +1,86 @@
-/* CSS Document */
-/***********************************************
-* Forms With Style - ? Design Melt Down (www.designmeltdown.com)
-* This notice MUST stay intact for legal use
-* Visit Design Melt Down at http://www.designmeltdown.com/ 
-***********************************************/
-body{
-	background-color:#ecefcb;
+body {
+font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+font-size: 12px;
+}
+p, h1, form, button {
+border: 0;
+margin: 0;
+padding: 0;
+}
+.spacer {
+clear: both;
+height: 1px;
+}
+fieldset {
+border: solid 2px #b7ddf2;
+background: #ebf4fb;
+}
+fieldset legend {
+font-size: 14px;
+font-weight: bold;
+color: #666;
+}
+.form {
+margin: 0 auto;
+width: 600px;
+padding: 14px;
 }
 
-form fieldset{
-	background-color:#e9f9ac;
-	
-	border-width:2px 2px 2px 10px;
-	border-style:solid;
-	border-color:#cee574;
-	
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:12px;
-		
-	margin:20px 0px 20px 20px;
-	width:350px;
-	position:relative;
-	display:block;
-	padding: 0px 10px 10px 10px;
+#stylized {
 }
-
-form fieldset legend{	
-	background-color:#ecefcb;
-	
-	border-width:1px 1px 1px 10px;
-	border-color:#ff9900;
-	border-style:solid;
-	
-	color:#5c71a2;
-	font-weight:bold;
-	text-transform:uppercase;
-	font-size:90%;
-	text-align:center;
-		
-	width:186px;
-	padding:3px 5px;
-	margin:0px 0px 10px -40px;
-	position:relative;
-	top: -14px;
-	
+#stylized h1 {
+font-size: 14px;
+font-weight: bold;
+margin-bottom: 8px;
 }
-	 
-form fieldset legend img{
-	padding:0px 5px 0px 5px;	
+#stylized p {
+font-size: 11px;
+color: #666666;
+margin-bottom: 20px;
+border-bottom: solid 1px #b7ddf2;
+padding-bottom: 10px;
 }
-
-label{
-	color:#5c71a2;
-	font-size:90%;
-	font-weight:bold;
-	
-	display:block;
-	float:left;
-	width:100px;
-	text-align:right;
-	margin:4px 5px 0px 0px;
+#stylized label {
+display: block;
+font-weight: bold;
+text-align: right;
+width: 200px;
+float: left;
 }
-
-input{
-	background-color:#e9f9ac;
-	
-	width:200px;
-	margin:2px 0px 0px 0px;
-	
-	border-width: 0px 0px 1px 0px;
-	border-style: solid solid dotted solid;
-	border-color:#809431;
-	
-	color:#5c71a2;
-	font-family:"Courier New", Courier, mono;
-	
-	padding:1px 2px;
+#stylized .small {
+color: #666666;
+display: block;
+font-size: 11px;
+font-weight: normal;
+text-align: right;
+width: 200px;
 }
-
-.button{
-	background-color:#e9f9ac;
-	background-image:none;
-	
-	border-width:1px;
-	border-style:solid;
-	border-color:#809431;
-	
-	font-weight:bold;
-	font-family:Arial, Helvetica, sans-serif;
-	
-	width:380px;
-	padding:2px;
-	margin:0px 0px 0px 20px
+#stylized input {
+float: left;
+font-size: 12px;
+padding: 4px 2px;
+border: solid 1px #aacfe4;
+width: 300px;
+margin: 2px 0 20px 10px;
+}
+#stylized textarea {
+float: left;
+font-size: 12px;
+padding: 4px 2px;
+border: solid 1px #aacfe4;
+width: 300px;
+height: 50px;
+margin: 2px 0 20px 10px;
+}
+#stylized button {
+clear: both;
+margin-left: 210px;
+width: 125px;
+height: 31px;
+background: #666666 no-repeat;
+text-align: center;
+line-height: 31px;
+color: #FFFFFF;
+font-size: 11px;
+font-weight: bold;
 }
