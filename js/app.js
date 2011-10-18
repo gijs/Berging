@@ -35,8 +35,7 @@
     AppView.prototype.events = {
       'click #step1_button': 'showStep2',
       'click #step2_button': 'showStep3',
-      'click #done_button': 'done',
-      'blur input[type=text]': 'done'
+      'click #done_button': 'done'
     };
     AppView.prototype.initialize = function() {
       console.log("AppView.initialize()");

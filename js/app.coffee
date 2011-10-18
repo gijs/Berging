@@ -17,7 +17,6 @@ class AppView extends Backbone.View
         'click #step1_button': 'showStep2'
         'click #step2_button': 'showStep3'
         'click #done_button': 'done'
-        'blur input[type=text]': 'done'
     initialize: =>
         console.log "AppView.initialize()"
         @showStep1()
