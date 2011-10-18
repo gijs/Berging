@@ -38,6 +38,13 @@ class AppView extends Backbone.View
     done: (e) =>
         console.log e
         console.log "Done!"
+        doc = jsPDF()
+        doc.text 20, 20, 'Rapportage'
+        doc.text 20, 30, 'Dit rapport is client-side gegenereerd.'
+        doc.addPage()
+        doc.text 20, 20, 'Leuk he?'
+        doc.output 'datauri'
+        
 
 
 class AfvoerModel extends Backbone.Model

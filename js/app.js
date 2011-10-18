@@ -64,8 +64,15 @@
       return console.log;
     };
     AppView.prototype.done = function(e) {
+      var doc;
       console.log(e);
-      return console.log("Done!");
+      console.log("Done!");
+      doc = jsPDF();
+      doc.text(20, 20, 'Rapportage');
+      doc.text(20, 30, 'Dit rapport is client-side gegenereerd.');
+      doc.addPage();
+      doc.text(20, 20, 'Leuk he?');
+      return doc.output('datauri');
     };
     return AppView;
   })();
