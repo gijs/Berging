@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-        <title>HNO</title>
+        <title>HNO Compenserende Berging Tool</title>
         <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen" title="no title" charset="utf-8">
         <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/underscore.js" type="text/javascript" charset="utf-8"></script>
@@ -13,16 +13,14 @@
         <script src="js/jsonselect.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/backbone.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
-        
 
-        <script type="text/template" id="algemene_gegevens">
+        <script type="text/template" id="app-form">
             <!-- TODO: Change this into a mobile-friendly HTML5 form -->
-            <div class="" id="">
+            <div class="appContainer" id="">
                 <fieldset id="" class="">
                     <legend>Algemene Gegevens</legend>
                     <div id="stylized" class="form">
                        <p>Voer hier de projectgegevens in.</p>
-
                          <label>Contactpersoon waterschap
                      <span class="small">Bijv. Aa &amp; Maas</span>
                        </label>
@@ -41,7 +39,7 @@
                       <label>Datum
                      <span class="small">Bijv. 17/10/2011</span>
                        </label>
-                     <input type="text" name="password" id="password" />
+                     <input type="text" name="datum" id="datum" value="<%= datum %>"/>
                      
                       <label>Algemene opmerkingen
                      <span class="small">Opmerkingen voor opname in het rapport</span>
@@ -52,67 +50,136 @@
                      <span class="small">Opmerkingen buiten het rapport</span>
                        </label>
                      <textarea name="interne_opmerkingen" rows="8" cols="20"></textarea>
-
-                         <button  type="submit" id="step1_button">Volgende</button>
                      <div class="spacer"></div>
 
                      </div>
                  </fieldset>
             </div>    
-        </script>
 
-        <script type="text/template" id="stap2_kenmerken">
-            <!-- TODO: Change this into a mobile-friendly HTML5 form -->
-            <div class="" id="">
+            <div class="appContainer" id="">
                 <fieldset id="" class="">
                     <legend>Kenmerken projectgebied</legend>
                     <div id="stylized" class="form">
                        <p>Voer hier de kenmerken van het projectgebied in.</p>
 
-                         <label>Bruto oppervlak projectgbied
-                     <span class="small">Dit is het totale oppervlak van het projectgebied waarbinnen de ontwikkeling plaats gaat vinden.</span>
-                       </label>
-                       <input type="text" name="name" id="name" />
-                       <div class="spacer"></div>
+                        <label>Bruto oppervlak projectgebied
+                        <span class="small">Dit is het totale oppervlak van het projectgebied waarbinnen de ontwikkeling plaats gaat vinden.</span>
+                        </label>
+                        <input type="text" name="bruto_opp_projectgebied" id="bruto_opp_projectgebied" value="<%= bruto_opp %>"/>
+                        <div class="spacer"></div>
 
-                           <label>Bestaand verhard oppervlak
-                       <span class="small">Dit is het verhard oppervlak dat nu in het projectgebied aanwezig is en wordt afgebroken.</span>
-                         </label>
-                         <input type="text" name="name" id="name" />
+                        <label>Bestaand verhard oppervlak
+                        <span class="small">Dit is het verhard oppervlak dat nu in het projectgebied aanwezig is en wordt afgebroken.</span>
+                        </label>
+                        <input type="text" name="bestaand_verhard_opp" id="bestaand_verhard_opp" value="<%= bestaand_verhard %>" />
+                        <div class="spacer"></div>
 
-                         <div class="spacer"></div>
+                        <label>Nieuw totaal verhard oppervlak
+                        <span class="small">Dit is het totale nieuwe verharde oppervlak dat binnen het projectgebied wordt ontwikkeld.</span>
+                        </label>
+                        <input type="text" name="nieuw_totaal_verhard_opp" id="nieuw_totaal_verhard_opp" value="<%= nieuw_totaal_verhard %>"/>
+                        <div class="spacer"></div>
 
-                         <button  type="submit" id="step2_button">Volgende</button>
-                     <div class="spacer"></div>
+                        <label>Netto te compenseren oppervlak
+                        <span class="small">Het netto te compenseren verhard oppervlak (nieuw verhard oppervlak - bestaand verhard oppervlak) wordt door het instrumentarium berekend.</span>
+                        </label>
+                        <input type="text" name="netto_comp_opp" id="netto_comp_opp" value="<%= netto_compensatie_opp %>" />
+                        <div class="spacer"></div>
 
+                        <label>Hiervan is type 1 (volledig verhard)
+                        <span class="small">&nbsp;</span>
+                        </label>
+                        <input type="text" name="nco_type_1" id="nco_type_1" />
+                        <div class="spacer"></div>
+
+                        <label>Hiervan is type 2 (semi-verhard)
+                        <span class="small">&nbsp;</span>
+                        </label>
+                        <input type="text" name="nco_type_2" id="nco_type_2" />
+                        <div class="spacer"></div>
+
+                        <label>Infiltratiepercentage semi-verhard oppervlak
+                        <span class="small">Hier dient ingevoerd te worden welk percentage van de op het semi-verhard oppervlak gevallen neerslag infiltreert.</span>
+                        </label>
+                        <input type="text" name="infiltratieperc_semi_opp" id="infiltratieperc_semi_opp" />
+                        <div class="spacer"></div>
+
+                        <label>Maaiveldniveau nieuw verhard oppervlak
+                        <span class="small">Het nieuwe maaiveldniveau (m NAP), zo nodig na ophoging, en de GHG (m NAP) worden gebruikt om te kijken of de voorziening volledig gebruikt kan worden.</span>
+                        </label>
+                        <input type="text" name="maaiveld_nieuw_verhard_opp" id="maaiveld_nieuw_verhard_opp" value="<%= maaiveld %>" />
+                        <div class="spacer"></div>
+
+                        <label>GHG
+                        <span class="small">Het nieuwe maaiveldniveau (m NAP), zo nodig na ophoging, en de GHG (m NAP) worden gebruikt om te kijken of de voorziening volledig gebruikt kan worden.</span>
+                        </label>
+                        <input type="text" name="ghg" id="ghg" value="<%= ghg %>"/>
+                        <div class="spacer"></div>
+
+                        <label>Infiltratiesnelheid bodem
+                        <span class="small">De infiltratiesnelheid van de bodem is de snelheid waarmee het geborgen water de voorziening via de bodem verlaat.</span>
+                        </label>
+                        <input type="text" name="infiltratiesnelheid" id="infiltratiesnelheid" />
+                        <div class="spacer"></div>
                      </div>
                  </fieldset>
             </div>    
-        
-        </script>
 
-        <script type="text/template" id="stap3_systeemeisen">
-            <!-- TODO: Change this into a mobile-friendly HTML5 form -->
-            <div class="" id="">
+            <div class="appContainer" id="">
                 <fieldset id="" class="">
                     <legend>Systeemeisen aan berging in projectgebied</legend>
                     <div id="stylized" class="form">
                        <p>Voer hier de systeemeisen aan de berging in het projectgebied in.</p>
 
-                         <label>Lengte voorziening
-                     <span class="small">Hier kan de gewenste lengte van de voorziening ingevuld worden.</span>
-                       </label>
-                       <input type="text" name="name" id="name" />
+                        <label>Lengte voorziening
+                        <span class="small">Hier kan de gewenste lengte van de voorziening ingevuld worden.</span>
+                        </label>
+                        <input type="text" name="lengte" id="lengte" value="<%= lengte %>" />
+                        <div class="spacer"></div>
 
-                         <button  type="submit" id="done_button">Genereer rapport</button>
-                     <div class="spacer"></div>
+                        <label>Talud voorziening (1:x)
+                        <span class="small">Hier kan het gewenste talud van de voorziening ingevuld worden.</span>
+                        </label>
+                        <input type="text" name="talud" id="talud" value="<%= talud %>" />
+                        <div class="spacer"></div>
+
+                        <label>Maximale peilsteiging (in normaal nat jaar)
+                        <span class="small">Hier kan de maximale peilstijging ingevuld worden die in een normaal nat jaar in de voorziening mag optreden.</span>
+                        </label>
+                        <input type="text" name="talud" id="talud" />
+                        <div class="spacer"></div>
+
+                        <label>Maximale peilsteiging (bij T=10 jaar scenario)
+                        <span class="small">Hier kan de maximale peilstijging ingevuld worden die in eens in de 10 jaar in de voorziening mag optreden.</span>
+                        </label>
+                        <input type="text" name="peilsteiging_t10" id="peilsteiging_t10" />
+                        <div class="spacer"></div>
+
+                        <label>Maximale peilsteiging (bij T=100 jaar scenario)
+                        <span class="small">Hier kan de maximale peilstijging ingevuld worden die in eens in de 100 jaar in de voorziening mag optreden.</span>
+                        </label>
+                        <input type="text" name="peilsteiging_t100" id="peilsteiging_t100" />
+                        <div class="spacer"></div>
+
+                        <label>Afvoercoefficient bij T=10 scenario
+                        <span class="small">Het afvoercoefficient bij T=10 jaar bepaald hoeveel liter er per seconde per ha achterliggend gebied mag afstromen.</span>
+                        </label>
+                        <input type="text" name="afvoercoefficient_t10" id="afvoercoefficient_t10" value="<%= afvoercoef_t10 %>" />
+                        <div class="spacer"></div>
+
+                        <label>Afvoercoefficient bij T=100 scenario
+                        <span class="small">Het afvoercoefficient bij T=100 jaar bepaald hoeveel liter er per seconde per ha achterliggend gebied mag afstromen.</span>
+                        </label>
+                        <input type="text" name="afvoercoefficient_t100" id="afvoercoefficient_t100" value="<%= afvoercoef_t10 %>" />
+                        <div class="spacer"></div>
+                        
+                    <button type="submit" id="done_button">Genereer rapport</button>
+                    <div class="spacer"></div>
 
                      </div>
                  </fieldset>
             </div>    
-        
         </script>
-
     </head>
     
     <body>

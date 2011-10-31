@@ -12,43 +12,11 @@ afvoertabel =
     tijd_uur_2: [0.333, 0.333, 0.333, 0.333, 0.333, 0.333, 0.2083, 0.2083, 0.1667, 0.125]
 
 
-class AppView extends Backbone.View
-    events:
-        'click #step1_button': 'showStep2'
-        'click #step2_button': 'showStep3'
-        'click #done_button': 'done'
-    initialize: =>
-        console.log "AppView.initialize()"
-        @showStep1()
-    showStep1: =>
-        console.log "AppView.showStep1()"
-        template = _.template $("#algemene_gegevens").html(), {}
-        @el.html template
-    showStep2: =>
-        console.log "AppView.showStep2()"
-        template = _.template $("#stap2_kenmerken").html(), {}
-        @el.html template
-    showStep3: =>
-        console.log "AppView.showStep3()"
-        template = _.template $("#stap3_systeemeisen").html(), {}
-        @el.html template
-    activeInput: =>
-        console.log
-    done: (e) =>
-        console.log e
-        console.log "Done!"
-        doc = jsPDF()
-        doc.text 20, 20, 'Rapportage'
-        doc.text 20, 30, 'Dit rapport is client-side gegenereerd.'
-        doc.addPage()
-        doc.text 20, 20, 'Leuk he?'
-        doc.output 'datauri'
-        
-
-
 class AfvoerModel extends Backbone.Model
+    d = new Date()
     defaults: ->
         done: false
+        datum: d.getDay() + "/" + d.getMonth() + "/" + d.getFullYear()
         bruto_opp: 0
         bestaand_verhard: 0
         nieuw_totaal_verhard: 0
@@ -59,12 +27,15 @@ class AfvoerModel extends Backbone.Model
         infiltratie_snelheid: 0
         afvoercoef_t10: 0
         afvoercoef_t100: 0
-        lengte: 0
+        lengte: 1
         talud: 1
+        toekomstig_maaiveld_niveau: 10
 
     initialize: ->
         console.log "Initializing AfvoerModel"
 
+        _.bindAll @, 'get_max_hoogte'
+        
         volume_berging_infiltratie_per_m2 = (@t10_min + (@ac - @ac_min) / (@ac_max - @ac_min) * (@t10_max - @t10_min)) / 100
         volume_berging_infiltratie_per_m2_1 = (@t10_min_1 + (@ac - @ac_min) / (@ac_max - @ac_min) * (@t10_max_1 - @t10_min_1)) / 100
         volume_berging_infiltratie_per_m2_2 = (@t10_min_2 + (@ac - @ac_min) / (@ac_max - @ac_min) * (@t10_max_2 - @t10_min_2)) / 100
@@ -83,7 +54,7 @@ class AfvoerModel extends Backbone.Model
             oppervlakte_kratten = -2 * @infiltratiesnelheid2 * @time * @hoogte + 
                 4 * @infiltratiesnelheid22 * @time2 * @hoogte2 + 
                 4 * @hoogte * @delta_max * @porosity / 1000.5 / 
-                2 * @hoogte * @porosity / 1002
+                2 * @hoogte * @porosity / 100
         else
             oppervlakte_kratten = -2 * @infiltratiesnelheid2 * @time * @hoogte + 
                 4 * @infiltratiesnelheid22 * @time2 * @hoogte2 + 
@@ -96,7 +67,7 @@ class AfvoerModel extends Backbone.Model
             oppervlakte_kratten_1 = -2 * @infiltratiesnelheid2 * @time_1 * @hoogte + 
                 4 * @infiltratiesnelheid22 * @time_12 * @hoogte2 + 
                 4 * @hoogte * @delta_max_1 * @porosity / 1000.5 / 
-                2 * @hoogte * @porosity / 1002
+                2 * @hoogte * @porosity / 100
         else
             oppervlakte_kratten_1 = -2 * @infiltratiesnelheid2 * @time_1 * @hoogte + 
                 4 * @infiltratiesnelheid22 * @time_12 * @hoogte2 + 
@@ -108,7 +79,7 @@ class AfvoerModel extends Backbone.Model
             oppervlakte_kratten_2 = -2 * @infiltratiesnelheid2 * @time_2 * @hoogte + 
                 4 * @infiltratiesnelheid22 * @time_22 * @hoogte2 + 
                 4 * @hoogte * @delta_max_2 * @porosity / 1000.5 / 
-                2 * @hoogte * @porosity / 1002
+                2 * @hoogte * @porosity / 100
         else
             oppervlakte_kratten_2 = -2 * @infiltratiesnelheid2 * @time_2 * @hoogte + 
                 4 * @infiltratiesnelheid22 * @time_22 * @hoogte2 + 
@@ -146,13 +117,47 @@ class AfvoerModel extends Backbone.Model
         this.save done:!@get 'done'
 
     get_max_hoogte: =>
-        max_hoogte = @toekomstig_maaiveld_niveau - @ghg - 0.5
-        max_hoogte
+        @get('toekomstig_maaiveld_niveau') - @get('ghg') - 0.5
+
+
+class AppView extends Backbone.View
+    template: "#app-form"
+    events:
+        'click #done_button': 'done'
+        'blur input': 'test'
+    test: (event) =>
+        console.log event
+    initialize: =>
+        # Parse the contents of the template div through
+        # the Underscore template() function, store in @template
+        @template = _.template $(@template).html()
+        # Call the render method
+        @render()
+    render: =>
+        # Set focus to the #name inputfield
+        $("#name").focus()
+        # Fill the el with the template, which is filled with
+        # data from the model
+        $(@el).html(@template(@model.toJSON()))
+        # Return @ for chaining possibilities
+        @
+    done: (e) =>
+        console.log e
+        console.log "Done!"
+        doc = jsPDF()
+        doc.text 20, 20, 'Rapportage'
+        doc.text 20, 30, 'Dit rapport is client-side gegenereerd.'
+        doc.addPage()
+        doc.text 20, 20, 'Leuk he?'
+        doc.output 'datauri'
+
+
+
 
 
 $(document).ready ->
-    # a = new AfvoerModel
-    # a.set 'talud': -3
-    # a.save
-    # console.log a.get 'talud'
-    window.app = new AppView {el: $("#app")}
+    am = new AfvoerModel
+    window.app = new AppView
+        el: $("#app")
+        template: $("#app-form")
+        model: am

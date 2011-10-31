@@ -21,70 +21,18 @@
     extra_berging_uur_2: [1.8, 1.7, 1.6, 1.5, 1.4, 1.4, 1.4, 1.2, 1.2, 1.1],
     tijd_uur_2: [0.333, 0.333, 0.333, 0.333, 0.333, 0.333, 0.2083, 0.2083, 0.1667, 0.125]
   };
-  AppView = (function() {
-    __extends(AppView, Backbone.View);
-    function AppView() {
-      this.done = __bind(this.done, this);
-      this.activeInput = __bind(this.activeInput, this);
-      this.showStep3 = __bind(this.showStep3, this);
-      this.showStep2 = __bind(this.showStep2, this);
-      this.showStep1 = __bind(this.showStep1, this);
-      this.initialize = __bind(this.initialize, this);
-      AppView.__super__.constructor.apply(this, arguments);
-    }
-    AppView.prototype.events = {
-      'click #step1_button': 'showStep2',
-      'click #step2_button': 'showStep3',
-      'click #done_button': 'done'
-    };
-    AppView.prototype.initialize = function() {
-      console.log("AppView.initialize()");
-      return this.showStep1();
-    };
-    AppView.prototype.showStep1 = function() {
-      var template;
-      console.log("AppView.showStep1()");
-      template = _.template($("#algemene_gegevens").html(), {});
-      return this.el.html(template);
-    };
-    AppView.prototype.showStep2 = function() {
-      var template;
-      console.log("AppView.showStep2()");
-      template = _.template($("#stap2_kenmerken").html(), {});
-      return this.el.html(template);
-    };
-    AppView.prototype.showStep3 = function() {
-      var template;
-      console.log("AppView.showStep3()");
-      template = _.template($("#stap3_systeemeisen").html(), {});
-      return this.el.html(template);
-    };
-    AppView.prototype.activeInput = function() {
-      return console.log;
-    };
-    AppView.prototype.done = function(e) {
-      var doc;
-      console.log(e);
-      console.log("Done!");
-      doc = jsPDF();
-      doc.text(20, 20, 'Rapportage');
-      doc.text(20, 30, 'Dit rapport is client-side gegenereerd.');
-      doc.addPage();
-      doc.text(20, 20, 'Leuk he?');
-      return doc.output('datauri');
-    };
-    return AppView;
-  })();
   AfvoerModel = (function() {
-    var validate;
+    var d, validate;
     __extends(AfvoerModel, Backbone.Model);
     function AfvoerModel() {
       this.get_max_hoogte = __bind(this.get_max_hoogte, this);
       AfvoerModel.__super__.constructor.apply(this, arguments);
     }
+    d = new Date();
     AfvoerModel.prototype.defaults = function() {
       return {
         done: false,
+        datum: d.getDay() + "/" + d.getMonth() + "/" + d.getFullYear(),
         bruto_opp: 0,
         bestaand_verhard: 0,
         nieuw_totaal_verhard: 0,
@@ -95,13 +43,15 @@
         infiltratie_snelheid: 0,
         afvoercoef_t10: 0,
         afvoercoef_t100: 0,
-        lengte: 0,
-        talud: 1
+        lengte: 1,
+        talud: 1,
+        toekomstig_maaiveld_niveau: 10
       };
     };
     AfvoerModel.prototype.initialize = function() {
       var breedte, breedte_1, breedte_2, breedte_max, extra_berging_t100, extra_berging_t100_1, extra_berging_t100_2, extra_berging_t100_per_m2, extra_berging_t100_per_m2_1, extra_berging_t100_per_m2_2, hoogte_nieuw, oppervlakte_kratten, oppervlakte_kratten_1, oppervlakte_kratten_2, talud_nieuw, volume_berging_infiltratie, volume_berging_infiltratie_1, volume_berging_infiltratie_2, volume_berging_infiltratie_per_m2, volume_berging_infiltratie_per_m2_1, volume_berging_infiltratie_per_m2_2;
       console.log("Initializing AfvoerModel");
+      _.bindAll(this, 'get_max_hoogte');
       volume_berging_infiltratie_per_m2 = (this.t10_min + (this.ac - this.ac_min) / (this.ac_max - this.ac_min) * (this.t10_max - this.t10_min)) / 100;
       volume_berging_infiltratie_per_m2_1 = (this.t10_min_1 + (this.ac - this.ac_min) / (this.ac_max - this.ac_min) * (this.t10_max_1 - this.t10_min_1)) / 100;
       volume_berging_infiltratie_per_m2_2 = (this.t10_min_2 + (this.ac - this.ac_min) / (this.ac_max - this.ac_min) * (this.t10_max_2 - this.t10_min_2)) / 100;
@@ -115,17 +65,17 @@
       extra_berging_t100_1 = this.extra_berging_t100_per_m2_1 * (this.nieuw_verhard_oppervlak - this.bestaand_verhard_oppervlak);
       extra_berging_t100_2 = this.extra_berging_t100_per_m2_2 * (this.nieuw_verhard_oppervlak - this.bestaand_verhard_oppervlak);
       if ((this.toekomstig_maaiveld_niveau - this.ghg - this.hoogte) < 1) {
-        oppervlakte_kratten = -2 * this.infiltratiesnelheid2 * this.time * this.hoogte + 4 * this.infiltratiesnelheid22 * this.time2 * this.hoogte2 + 4 * this.hoogte * this.delta_max * this.porosity / 1000.5 / 2 * this.hoogte * this.porosity / 1002;
+        oppervlakte_kratten = -2 * this.infiltratiesnelheid2 * this.time * this.hoogte + 4 * this.infiltratiesnelheid22 * this.time2 * this.hoogte2 + 4 * this.hoogte * this.delta_max * this.porosity / 1000.5 / 2 * this.hoogte * this.porosity / 100;
       } else {
         oppervlakte_kratten = -2 * this.infiltratiesnelheid2 * this.time * this.hoogte + 4 * this.infiltratiesnelheid22 * this.time2 * this.hoogte2 + 4 * this.hoogte * this.delta_max * this.porosity / 100 + 4 * this.infiltratiesnelheid2 * this.time * this.delta_max * 0.5 / 2 * this.hoogte * this.porosity / 100 + 2 * this.infiltratiesnelheid2 * this.time2;
       }
       if ((this.toekomstig_maaiveld_niveau - this.ghg - this.hoogte) < 1) {
-        oppervlakte_kratten_1 = -2 * this.infiltratiesnelheid2 * this.time_1 * this.hoogte + 4 * this.infiltratiesnelheid22 * this.time_12 * this.hoogte2 + 4 * this.hoogte * this.delta_max_1 * this.porosity / 1000.5 / 2 * this.hoogte * this.porosity / 1002;
+        oppervlakte_kratten_1 = -2 * this.infiltratiesnelheid2 * this.time_1 * this.hoogte + 4 * this.infiltratiesnelheid22 * this.time_12 * this.hoogte2 + 4 * this.hoogte * this.delta_max_1 * this.porosity / 1000.5 / 2 * this.hoogte * this.porosity / 100;
       } else {
         oppervlakte_kratten_1 = -2 * this.infiltratiesnelheid2 * this.time_1 * this.hoogte + 4 * this.infiltratiesnelheid22 * this.time_12 * this.hoogte2 + 4 * this.hoogte * this.delta_max_1 * this.porosity / 100 + 4 * this.infiltratiesnelheid2 * this.time_1 * this.delta_max_1 * 0.5 / 2 * this.hoogte * this.porosity / 100 + 2 * this.infiltratiesnelheid2 * this.time_12;
       }
       if ((this.toekomstig_maaiveld_niveau - this.ghg - this.hoogte) < 1) {
-        oppervlakte_kratten_2 = -2 * this.infiltratiesnelheid2 * this.time_2 * this.hoogte + 4 * this.infiltratiesnelheid22 * this.time_22 * this.hoogte2 + 4 * this.hoogte * this.delta_max_2 * this.porosity / 1000.5 / 2 * this.hoogte * this.porosity / 1002;
+        oppervlakte_kratten_2 = -2 * this.infiltratiesnelheid2 * this.time_2 * this.hoogte + 4 * this.infiltratiesnelheid22 * this.time_22 * this.hoogte2 + 4 * this.hoogte * this.delta_max_2 * this.porosity / 1000.5 / 2 * this.hoogte * this.porosity / 100;
       } else {
         oppervlakte_kratten_2 = -2 * this.infiltratiesnelheid2 * this.time_2 * this.hoogte + 4 * this.infiltratiesnelheid22 * this.time_22 * this.hoogte2 + 4 * this.hoogte * this.delta_max_2 * this.porosity / 100 + 4 * this.infiltratiesnelheid2 * this.time_2 * this.delta_max_2 * 0.5 / 2 * this.hoogte * this.porosity / 100 + 2 * this.infiltratiesnelheid2 * this.time_22;
       }
@@ -162,15 +112,56 @@
       });
     };
     AfvoerModel.prototype.get_max_hoogte = function() {
-      var max_hoogte;
-      max_hoogte = this.toekomstig_maaiveld_niveau - this.ghg - 0.5;
-      return max_hoogte;
+      return this.get('toekomstig_maaiveld_niveau') - this.get('ghg') - 0.5;
     };
     return AfvoerModel;
   }).call(this);
+  AppView = (function() {
+    __extends(AppView, Backbone.View);
+    function AppView() {
+      this.done = __bind(this.done, this);
+      this.render = __bind(this.render, this);
+      this.initialize = __bind(this.initialize, this);
+      this.test = __bind(this.test, this);
+      AppView.__super__.constructor.apply(this, arguments);
+    }
+    AppView.prototype.template = "#app-form";
+    AppView.prototype.events = {
+      'click #done_button': 'done',
+      'blur input': 'test'
+    };
+    AppView.prototype.test = function(event) {
+      return console.log(event);
+    };
+    AppView.prototype.initialize = function() {
+      this.template = _.template($(this.template).html());
+      return this.render();
+    };
+    AppView.prototype.render = function() {
+      $("#name").focus();
+      $(this.el).html(this.template(this.model.toJSON()));
+      return this;
+    };
+    AppView.prototype.done = function(e) {
+      var doc;
+      console.log(e);
+      console.log("Done!");
+      doc = jsPDF();
+      doc.text(20, 20, 'Rapportage');
+      doc.text(20, 30, 'Dit rapport is client-side gegenereerd.');
+      doc.addPage();
+      doc.text(20, 20, 'Leuk he?');
+      return doc.output('datauri');
+    };
+    return AppView;
+  })();
   $(document).ready(function() {
+    var am;
+    am = new AfvoerModel;
     return window.app = new AppView({
-      el: $("#app")
+      el: $("#app"),
+      template: $("#app-form"),
+      model: am
     });
   });
 }).call(this);
