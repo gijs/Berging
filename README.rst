@@ -4,7 +4,6 @@ Berging
 This is an attempt to convert an existing Java app to
 single page Javascript.
 
-
 Todo
 ----
 
@@ -19,3 +18,5 @@ Todo
     a connection can be made. Even include a staticmap of the area?
  - Make forms and layout more iOS friendly (use modernizr.js,
     less.js etc, use slider input instead of numbers etc.)
+=======
+Preview: http://gijs.github.com/Berging/
