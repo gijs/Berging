@@ -1,4 +1,3 @@
-
 Berging
 =======
 This is an attempt to convert an existing Java app to single page Javascript.
@@ -15,7 +14,7 @@ Todo
  * Use pdf.js instead of jspdf.js [tip!]
  * Add images and layout to PDF
  * Use Backbone controller and routes [pushState!]
- * Perhaps mimic original one-page interface instead of steps?
+ * Perhaps mimic original one-page interface instead of steps? (done!)
  * Save state using localStorage?
  * Add HTML5 geolocation to PDF output (approx. location) if a connection can be made. Even include a staticmap of the area?
  * Make forms and layout more iOS friendly (use modernizr.js, less.js etc, use slider input instead of numbers etc.)
