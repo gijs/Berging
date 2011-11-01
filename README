@@ -16,5 +16,6 @@ Todo
  - Perhaps mimic original one-page interface instead of steps?
  - Save state using localStorage?
  - Add HTML5 geolocation to PDF output (approx. location) if
-   a connection can be made
- - 
+    a connection can be made. Even include a staticmap of the area?
+ - Make forms and layout more iOS friendly (use modernizr.js,
+    less.js etc, use slider input instead of numbers etc.)
