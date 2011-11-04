@@ -25,17 +25,17 @@
                          <label>Contactpersoon waterschap
                      <span class="small">Bijv. Aa &amp; Maas</span>
                        </label>
-                     <input type="text" name="name" id="name" />
+                     <input type="text" name="name" id="name" value="<%= naam_waterschap %>"/>
 
                      <label>Contactpersoon initiatiefnemer
                      <span class="small">&nbsp;</span>
                        </label>
-                     <input type="text" name="email" id="email" />
+                     <input type="text" name="naam_initiatiefnemer" id="naam_initiatiefnemer" value="<%= naam_initiatiefnemer %>" />
 
                       <label>Naam project
                      <span class="small">Min. twee karakters</span>
                        </label>
-                     <input type="text" name="password" id="password" />
+                     <input type="text" name="naam_project" id="naam_project" value="<%= naam_project %>" />
 
                       <label>Datum
                      <span class="small">Bijv. 17/10/2011</span>
@@ -63,65 +63,24 @@
                     <div id="stylized" class="form">
                        <p>Voer hier de kenmerken van het projectgebied in.</p>
 
-                        <label>Bruto oppervlak projectgebied
-                        <span class="small">Dit is het totale oppervlak van het projectgebied waarbinnen de ontwikkeling plaats gaat vinden.</span>
-                        </label>
-                        <input type="text" name="bruto_opp_projectgebied" id="bruto_opp_projectgebied" value="<%= bruto_opp %>"/>
-                        <div class="spacer"></div>
-
                         <label>Bestaand verhard oppervlak
                         <span class="small">Dit is het verhard oppervlak dat nu in het projectgebied aanwezig is en wordt afgebroken.</span>
                         </label>
                         <input type="text" name="bestaand_verhard_opp" id="bestaand_verhard_opp" value="<%= bestaand_verhard %>" />
                         <div class="spacer"></div>
 
-                        <label>Nieuw totaal verhard oppervlak
+                        <label>Toekomstig totaal verhard oppervlak
                         <span class="small">Dit is het totale nieuwe verharde oppervlak dat binnen het projectgebied wordt ontwikkeld.</span>
                         </label>
-                        <input type="text" name="nieuw_totaal_verhard_opp" id="nieuw_totaal_verhard_opp" value="<%= nieuw_totaal_verhard %>"/>
+                        <input type="text" name="toekomstig_verhard_opp" id="toekomstig_verhard_opp" value="<%= toekomstig_verhard_opp %>"/>
                         <div class="spacer"></div>
 
-                        <label>Netto te compenseren oppervlak
+                        <label>Afvoercoëfficiënt projectgebied
                         <span class="small">Het netto te compenseren verhard oppervlak (nieuw verhard oppervlak - bestaand verhard oppervlak) wordt door het instrumentarium berekend.</span>
                         </label>
-                        <input type="text" name="netto_comp_opp" id="netto_comp_opp" value="<%= netto_compensatie_opp %>" />
+                        <input type="text" name="afvoercoefficient" id="afvoercoefficient" value="<%= afvoercoefficient %>" />
                         <div class="spacer"></div>
 
-                        <label>Hiervan is type 1 (volledig verhard)
-                        <span class="small">&nbsp;</span>
-                        </label>
-                        <input type="text" name="nco_type_1" id="nco_type_1" />
-                        <div class="spacer"></div>
-
-                        <label>Hiervan is type 2 (semi-verhard)
-                        <span class="small">&nbsp;</span>
-                        </label>
-                        <input type="text" name="nco_type_2" id="nco_type_2" />
-                        <div class="spacer"></div>
-
-                        <label>Infiltratiepercentage semi-verhard oppervlak
-                        <span class="small">Hier dient ingevoerd te worden welk percentage van de op het semi-verhard oppervlak gevallen neerslag infiltreert.</span>
-                        </label>
-                        <input type="text" name="infiltratieperc_semi_opp" id="infiltratieperc_semi_opp" />
-                        <div class="spacer"></div>
-
-                        <label>Maaiveldniveau nieuw verhard oppervlak
-                        <span class="small">Het nieuwe maaiveldniveau (m NAP), zo nodig na ophoging, en de GHG (m NAP) worden gebruikt om te kijken of de voorziening volledig gebruikt kan worden.</span>
-                        </label>
-                        <input type="text" name="maaiveld_nieuw_verhard_opp" id="maaiveld_nieuw_verhard_opp" value="<%= maaiveld %>" />
-                        <div class="spacer"></div>
-
-                        <label>GHG
-                        <span class="small">Het nieuwe maaiveldniveau (m NAP), zo nodig na ophoging, en de GHG (m NAP) worden gebruikt om te kijken of de voorziening volledig gebruikt kan worden.</span>
-                        </label>
-                        <input type="text" name="ghg" id="ghg" value="<%= ghg %>"/>
-                        <div class="spacer"></div>
-
-                        <label>Infiltratiesnelheid bodem
-                        <span class="small">De infiltratiesnelheid van de bodem is de snelheid waarmee het geborgen water de voorziening via de bodem verlaat.</span>
-                        </label>
-                        <input type="text" name="infiltratiesnelheid" id="infiltratiesnelheid" />
-                        <div class="spacer"></div>
                      </div>
                  </fieldset>
             </div>    
@@ -177,7 +136,7 @@
                     <button type="submit" id="done_button">Genereer rapport</button>
                     <div class="spacer"></div>
                     
-                    <p id="toekomstig_maaiveld_niveau"><%= toekomstig_maaiveld_niveau %></p>
+                    <p>Toekomstig maaiveldniveau: <span id="toekomstig_maaiveld_niveau"><%= toekomstig_maaiveld_niveau %></span></p>
 
                      </div>
                  </fieldset>

@@ -16,11 +16,16 @@ class AfvoerModel extends Backbone.Model
     d = new Date()
     defaults: ->
         datum: d.getDay() + "/" + d.getMonth() + "/" + d.getFullYear()
+        naam_waterschap: ""
+        naam_initiatiefnemer: ""
+        naam_project: ""
         bruto_opp: 0
         bestaand_verhard: 0
         nieuw_totaal_verhard: 0
         netto_compensatie_opp: 0
         infiltratie_percentage: 0
+        toekomstig_verhard_opp: 0
+        afvoercoefficient: 0
         maaiveld: 0
         ghg: 0
         infiltratie_snelheid: 0
@@ -54,8 +59,13 @@ class AppView extends Backbone.View
         'blur input': 'recalc'
     recalc: (event) =>
         console.log "recalc()"
-        # console.log $(event.target).val()
+        console.log $(event.target).val()
+
+
+
+        console.log $(event.target)[0].id
         @model.addOne()
+        $('span#toekomstig_maaiveld_niveau').html @model.get('toekomstig_maaiveld_niveau')
     initialize: =>
         @template = _.template $(@template).html()
         @render()
@@ -68,7 +78,7 @@ class AppView extends Backbone.View
         console.log "Done!"
         doc = jsPDF()
         doc.text 20, 20, 'Rapportage'
-        doc.text 20, 30, 'Dit rapport is client-side gegenereerd.'
+        doc.text 20, 30, @model.get('naam_waterschap')
         doc.addPage()
         doc.text 20, 20, 'Leuk he?'
         doc.output 'datauri'
